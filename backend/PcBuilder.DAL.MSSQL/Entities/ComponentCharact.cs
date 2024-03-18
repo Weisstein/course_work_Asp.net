@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PcBuilder.DAL.MSSQL.Entities;
 
 namespace PcBuilder.DAL.MySQL.Entities
 {
-    internal class ComponentCharact
+    public class ComponentCharact
     {
+        public Guid id { get; set; }
+
+        public string Name { get; set; } = string.Empty;
+
+        public string Value {  get; set; } = string.Empty;
+
+        public Guid componentId { get; set; }
+
+        public Component? component { get; set; }
     }
 }
