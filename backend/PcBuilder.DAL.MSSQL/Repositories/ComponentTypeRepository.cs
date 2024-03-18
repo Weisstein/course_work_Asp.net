@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PcBuilder.Core.Abstractions;
 using PcBuilder.Core.Models;
+using PcBuilder.DAL.MySQL.Entities;
 
 namespace PcBuilder.DAL.MySQL.Repositories
 {
@@ -15,15 +16,29 @@ namespace PcBuilder.DAL.MySQL.Repositories
 
         public async Task<List<ComponentType>> GetAll()
         {
-            var componentType = await _dbContext.componentTypes
+            var componentTypeEntity = await _dbContext.componentTypes
                 .AsNoTracking()
                 .ToListAsync();
 
-            var componentTypes = componentType
+            var componentTypes = componentTypeEntity
                 .Select(ct => ComponentType.Create(ct.Id, ct.Name).componentType)
                 .ToList();
 
             return componentTypes;
+        }
+
+        public async Task<Guid> Add(ComponentType componentType)
+        {
+            var componentTypeEntity = new ComponentTypeEntity
+            {
+                Id = Guid.NewGuid(),
+                Name = componentType.Name
+            };
+
+            await _dbContext.componentTypes.AddAsync(componentTypeEntity);
+            await _dbContext.SaveChangesAsync();
+
+            return componentTypeEntity.Id;
         }
     }
 }
