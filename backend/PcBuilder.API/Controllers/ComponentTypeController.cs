@@ -34,6 +34,14 @@ namespace PcBuilder.API.Controllers
                 Guid.NewGuid(),
                 request.Name
                 );
+            if (!string.IsNullOrEmpty(error))
+            {
+                return BadRequest(error);
+            }
+
+            await _componentTypeServise.Add(type);
+
+            return Ok();
         }
     }
 }
