@@ -31,7 +31,7 @@ namespace PcBuilder.DAL.MySQL.Repositories
         {
             var componentTypeEntity = new ComponentTypeEntity
             {
-                Id = Guid.NewGuid(),
+                Id = componentType.Id,
                 Name = componentType.Name
             };
 

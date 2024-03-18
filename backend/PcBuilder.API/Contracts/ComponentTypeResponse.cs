@@ -5,4 +5,8 @@
         string Name
         );
     
+    public record ComponentTypeRequest(
+        Guid Id,
+        string Name
+        );
 }
