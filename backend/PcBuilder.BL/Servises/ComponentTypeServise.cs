@@ -3,7 +3,7 @@ using PcBuilder.Core.Models;
 
 namespace PcBuilder.BL.Servises
 {
-    public class ComponentTypeServise
+    public class ComponentTypeServise : IComponentTypeServise
     {
         private readonly IComponentTypeRepository _componentTypeRepository;
 
@@ -17,7 +17,7 @@ namespace PcBuilder.BL.Servises
             return await _componentTypeRepository.GetAll();
         }
 
-        public async Task<Guid> Add(ComponentType componentType) 
+        public async Task<Guid> Add(ComponentType componentType)
         {
             return await _componentTypeRepository.Add(componentType);
         }
