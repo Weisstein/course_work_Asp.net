@@ -10,13 +10,13 @@
 
         public decimal Price { get; set; } = decimal.Zero;
 
-        public List<ComponentCharact> characts { get; set; } = [];
+        public List<ComponentCharactEntity> characts { get; set; } = [];
 
         public List<BuildEntity> builds { get; set; } = [];
 
         public Guid typeID { get; set; }
 
-        public ComponentType? type { get; set; }
+        public ComponentTypeEntity? type { get; set; }
 
     }
 }
