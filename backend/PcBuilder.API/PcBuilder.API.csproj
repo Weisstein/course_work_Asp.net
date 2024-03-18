@@ -15,4 +15,8 @@
     <Folder Include="Contracts\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PcBuilder.DAL.MSSQL\PcBuilder.DAL.MySQL.csproj" />
+  </ItemGroup>
+
 </Project>

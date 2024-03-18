@@ -18,7 +18,7 @@ namespace PcBuilder.DAL.MSSQL.Entities
 
         public Guid typeID { get; set; }
 
-        public ComponentType? Type { get; set; }
+        public ComponentType? type { get; set; }
 
     }
 }
