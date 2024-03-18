@@ -2,7 +2,7 @@
 {
     public class ComponentType
     {
-        const int MAS_SIZE_LENGTH = 100;
+        public const int MAS_SIZE_LENGTH = 255;
 
         private ComponentType(Guid id, string name) 
         { 

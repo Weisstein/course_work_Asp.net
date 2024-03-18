@@ -2,13 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 using PcBuilder.DAL.MySQL.Entities;
 
+
 namespace PcBuilder.DAL.MySQL.Configurations
 {
-    public class ComponentTypeConfig : IEntityTypeConfiguration<ComponentType>
+    public class ComponentTypeConfig : IEntityTypeConfiguration<ComponentTypeEntity>
     {
-        public void Configure(EntityTypeBuilder<ComponentType> builder)
+        public void Configure(EntityTypeBuilder<ComponentTypeEntity> builder)
         {
             builder.HasKey(ct => ct.Id);
+
+            builder
+                .Property(ct => ct.Name)
+                .HasMaxLength();
 
             builder
                 .HasMany(ct => ct.components)
