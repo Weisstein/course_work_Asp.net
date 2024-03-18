@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using PcBuilder.DAL.MSSQL.Entities;
+using PcBuilder.DAL.MySQL.Entities;
 
 namespace PcBuilder.DAL.MySQL.Configurations
 {

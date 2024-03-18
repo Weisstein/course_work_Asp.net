@@ -1,6 +1,4 @@
-﻿using PcBuilder.DAL.MSSQL.Entities;
-
-namespace PcBuilder.DAL.MySQL.Entities
+﻿namespace PcBuilder.DAL.MySQL.Entities
 {
     public class Build
     {
