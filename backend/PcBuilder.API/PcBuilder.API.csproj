@@ -20,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PcBuilder.BL\PcBuilder.BL.csproj" />
+    <ProjectReference Include="..\PcBuilder.Core\PcBuilder.Core.csproj" />
     <ProjectReference Include="..\PcBuilder.DAL.MSSQL\PcBuilder.DAL.MySQL.csproj" />
   </ItemGroup>
 

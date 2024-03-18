@@ -10,4 +10,8 @@
     <Folder Include="Servises\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PcBuilder.Core\PcBuilder.Core.csproj" />
+  </ItemGroup>
+
 </Project>
