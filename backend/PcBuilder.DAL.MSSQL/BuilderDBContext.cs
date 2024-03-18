@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PcBuilder.DAL.MSSQL.Entities;
 using PcBuilder.DAL.MySQL.Configurations;
 using PcBuilder.DAL.MySQL.Entities;
 
