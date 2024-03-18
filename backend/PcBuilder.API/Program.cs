@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using PcBuilder.BL.Servises;
+using PcBuilder.Core.Abstractions;
 using PcBuilder.DAL.MySQL;
+using PcBuilder.DAL.MySQL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,8 @@ builder.Services.AddDbContext<BuilderDBContext>(
     }
     );
 
+builder.Services.AddScoped<IComponentTypeServise, ComponentTypeServise>();
+builder.Services.AddScoped<IComponentTypeRepository, ComponentTypeRepository>();
 
 var app = builder.Build();
 
