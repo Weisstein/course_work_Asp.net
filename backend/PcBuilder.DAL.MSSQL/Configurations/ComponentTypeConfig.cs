@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using PcBuilder.DAL.MySQL.Entities;
+using PcBuilder.Core.Models;
 
 
 namespace PcBuilder.DAL.MySQL.Configurations
@@ -13,7 +14,8 @@ namespace PcBuilder.DAL.MySQL.Configurations
 
             builder
                 .Property(ct => ct.Name)
-                .HasMaxLength();
+                .HasMaxLength(ComponentType.MAS_SIZE_LENGTH)
+                .IsRequired();
 
             builder
                 .HasMany(ct => ct.components)

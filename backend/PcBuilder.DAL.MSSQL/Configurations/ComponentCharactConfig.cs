@@ -5,9 +5,9 @@ using PcBuilder.DAL.MySQL.Entities;
 
 namespace PcBuilder.DAL.MySQL.Configurations
 {
-    public class ComponentCharactConfig : IEntityTypeConfiguration<ComponentCharact>
+    public class ComponentCharactConfig : IEntityTypeConfiguration<ComponentCharactEntity>
     {
-        public void Configure(EntityTypeBuilder<ComponentCharact> builder)
+        public void Configure(EntityTypeBuilder<ComponentCharactEntity> builder)
         {
             builder.HasKey(cc => cc.Id);
         }

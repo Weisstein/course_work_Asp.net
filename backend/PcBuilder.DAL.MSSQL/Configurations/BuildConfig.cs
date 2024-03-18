@@ -4,9 +4,9 @@ using PcBuilder.DAL.MySQL.Entities;
 
 namespace PcBuilder.DAL.MySQL.Configurations
 {
-    public class BuildConfig : IEntityTypeConfiguration<Build>
+    public class BuildConfig : IEntityTypeConfiguration<BuildEntity>
     {
-        public void Configure(EntityTypeBuilder<Build> builder)
+        public void Configure(EntityTypeBuilder<BuildEntity> builder)
         {
             builder.HasKey(b => b.Id);
 

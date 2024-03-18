@@ -20,8 +20,10 @@ namespace PcBuilder.DAL.MySQL.Repositories
                 .ToListAsync();
 
             var componentTypes = componentType
-                .Select(ct => ComponentType);
-                
+                .Select(ct => ComponentType.Create(ct.Id, ct.Name).componentType)
+                .ToList();
+
+            return componentTypes;
         }
     }
 }
