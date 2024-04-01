@@ -22,7 +22,7 @@ namespace PcBuilder.API.Controllers
         {
             var types = await _componentTypeServise.GetAll();
 
-            var response = types.Select(t => new ComponentTypeResponse(t.Name));
+            var response = types.Select(t => new ComponentTypeResponse(t.Id, t.Name));
 
             return Ok(response);
         }
@@ -32,7 +32,7 @@ namespace PcBuilder.API.Controllers
         {
             var types = await _componentTypeServise.GetById(id);
 
-            var response = new ComponentTypeResponse(types.Name);
+            var response = new ComponentTypeResponse(types.Id, types.Name);
 
             return Ok(response);
         }

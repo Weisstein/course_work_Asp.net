@@ -1,7 +1,7 @@
 ﻿namespace PcBuilder.API.Contracts
 {
     public record ComponentTypeResponse(
-        Guid id,
+        Guid Id,
         string Name
         );
     
