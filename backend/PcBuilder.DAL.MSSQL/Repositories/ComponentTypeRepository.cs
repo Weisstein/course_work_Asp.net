@@ -27,6 +27,18 @@ namespace PcBuilder.DAL.MySQL.Repositories
             return componentTypes;
         }
 
+        public async Task<ComponentType> GetById(Guid id)
+        {
+            var componentTypeEntity = await _dbContext.componentTypes
+                .FirstOrDefaultAsync(ct => ct.Id == id);
+                
+
+            var componentType = ComponentType.Create(componentTypeEntity.Id, componentTypeEntity.Name).componentType;
+                
+
+            return componentType;
+        }
+
         public async Task<Guid> Add(ComponentType componentType)
         {
             var componentTypeEntity = new ComponentTypeEntity

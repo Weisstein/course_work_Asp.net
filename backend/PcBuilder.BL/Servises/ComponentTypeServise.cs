@@ -12,9 +12,14 @@ namespace PcBuilder.BL.Servises
             _componentTypeRepository = componentTypeRepository;
         }
 
-        public async Task<List<ComponentType>> GetAllComponentTypes()
+        public async Task<List<ComponentType>> GetAll()
         {
             return await _componentTypeRepository.GetAll();
+        }
+
+        public async Task<ComponentType> GetById(Guid id)
+        {
+            return await _componentTypeRepository.GetById(id);
         }
 
         public async Task<Guid> Add(ComponentType componentType)

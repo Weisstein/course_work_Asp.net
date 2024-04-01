@@ -18,14 +18,25 @@ namespace PcBuilder.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ComponentTypeResponse>>> GetTypes()
+        public async Task<ActionResult<List<ComponentTypeResponse>>> GetAll()
         {
-            var types = await _componentTypeServise.GetAllComponentTypes();
+            var types = await _componentTypeServise.GetAll();
 
-            var response = types.Select(t => new ComponentTypeResponse(t.Id,t.Name));
+            var response = types.Select(t => new ComponentTypeResponse(t.Name));
 
             return Ok(response);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ComponentTypeResponse>> GetById(Guid id)
+        {
+            var types = await _componentTypeServise.GetById(id);
+
+            var response = new ComponentTypeResponse(types.Name);
+
+            return Ok(response);
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<Guid>> AddType([FromBody] ComponentTypeRequest request)
