@@ -41,7 +41,7 @@ namespace PcBuilder.DAL.MySQL.Repositories
         {
             var querry = (from c in _dbContext.components
                           join ct in _dbContext.componentTypes on c.TypeID equals ct.Id
-                          join cc in _dbContext.componentCharacts on c.Id equals cc.componentId
+                          join cc in _dbContext.componentCharacts on c.Id equals cc.componentId 
                           select new
                           {
                               c.Id,
@@ -50,13 +50,12 @@ namespace PcBuilder.DAL.MySQL.Repositories
                               c.Price,
                               TypeId = ct.Id,
                               ct.Name,
-                              CharId = cc.Id,
                               cc.Value
                           }).AsNoTracking();
 
             if (!string.IsNullOrEmpty(name))
             {
-                querry = querry.Where(ct => ct.Name.Contains(name));
+                querry = querry.Where(ct => ct.Name == name);
             }
 
 
