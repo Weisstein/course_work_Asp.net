@@ -12,6 +12,8 @@ namespace PcBuilder.DAL.MySQL.Configurations
         {
             builder.HasKey(ct => ct.Id);
 
+            builder.HasAlternateKey(ct => ct.Name);
+
             builder
                 .Property(ct => ct.Name)
                 .HasMaxLength(ComponentType.MAS_SIZE_LENGTH)
