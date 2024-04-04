@@ -5,7 +5,7 @@ using System.Runtime.InteropServices.ObjectiveC;
 
 namespace PcBuilder.DAL.MySQL.Repositories
 {
-    public class ComponentRepository
+    public class ComponentRepository : IComponentRepository
     {
         private readonly BuilderDBContext _dbContext;
 
@@ -17,11 +17,11 @@ namespace PcBuilder.DAL.MySQL.Repositories
         public async Task<List<Component>> GetAll()
         {
             var componentEntity = await _dbContext.components
-                .AsNoTracking() 
+                .AsNoTracking()
                 .ToListAsync();
 
             var components = componentEntity
-                .Select(c => Component.Create(c.Id,c.Title,c.Description,c.Price,c.TypeID).component)
+                .Select(c => Component.Create(c.Id, c.Title, c.Description, c.Price, c.TypeID).component)
                 .ToList();
 
             return components;
@@ -40,26 +40,26 @@ namespace PcBuilder.DAL.MySQL.Repositories
         public async Task<List<Component>> GetByFilter(Guid? typeId, string? name, Guid? charId, string? value)
         {
             var querry = (from c in _dbContext.components
-                              join ct in _dbContext.componentTypes on c.TypeID equals ct.Id
-                              join cc in _dbContext.componentCharacts on c.Id equals cc.componentId
-                              select new
-                              {
-                                  c.Id,
-                                  c.Title,
-                                  c.Description,
-                                  c.Price,
-                                  TypeId = ct.Id,
-                                  ct.Name,
-                                  CharId = cc.Id,
-                                  cc.Value
-                              }).AsNoTracking();
+                          join ct in _dbContext.componentTypes on c.TypeID equals ct.Id
+                          join cc in _dbContext.componentCharacts on c.Id equals cc.componentId
+                          select new
+                          {
+                              c.Id,
+                              c.Title,
+                              c.Description,
+                              c.Price,
+                              TypeId = ct.Id,
+                              ct.Name,
+                              CharId = cc.Id,
+                              cc.Value
+                          }).AsNoTracking();
 
             if (typeId != Guid.Empty)
             {
                 querry = querry.Where(ct => ct.TypeId == typeId);
             }
 
-            if (!string.IsNullOrEmpty(name)) 
+            if (!string.IsNullOrEmpty(name))
             {
                 querry = querry.Where(ct => ct.Name.Contains(name));
             }
@@ -74,11 +74,11 @@ namespace PcBuilder.DAL.MySQL.Repositories
                 querry = querry.Where(cc => cc.Value == value);
             }
 
-            var components = querry.Select(c => Component.Create(c.Id,c.Title,c.Description,c.Price,c.TypeId).component).ToListAsync();
+            var components = querry.Select(c => Component.Create(c.Id, c.Title, c.Description, c.Price, c.TypeId).component).ToListAsync();
 
             return await components;
         }
-        
+
         public async Task<Guid> Add(Component component)
         {
             var componentEntity = new ComponentEntity
