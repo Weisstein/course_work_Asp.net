@@ -21,8 +21,8 @@ namespace PcBuilder.DAL.MySQL.Configurations
 
             builder
                 .HasMany(ct => ct.components)
-                .WithOne(c => c.type)
-                .HasForeignKey(c => c.typeID);
+                .WithOne(c => c.Type)
+                .HasForeignKey(c => c.TypeID);
 
         }
     }

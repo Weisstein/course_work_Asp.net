@@ -16,7 +16,7 @@ namespace PcBuilder.DAL.MySQL.Configurations
 
             builder
                 .HasMany(b => b.components)
-                .WithMany(c => c.builds);
+                .WithMany(c => c.Builds);
         }
     }
 }

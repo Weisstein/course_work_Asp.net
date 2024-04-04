@@ -19,13 +19,13 @@ namespace PcBuilder.DAL.MySQL.Configurations
                 .IsRequired();
 
             builder
-                .HasMany(c => c.characts)
+                .HasMany(c => c.Characts)
                 .WithOne(cc => cc.component)
                 .HasForeignKey(cc => cc.componentId);
 
 
             builder
-                .HasMany(c => c.builds)
+                .HasMany(c => c.Builds)
                 .WithMany(b => b.components);
         }
     }
