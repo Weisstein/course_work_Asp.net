@@ -23,7 +23,8 @@ builder.Services.AddDbContext<BuilderDBContext>(
 
 builder.Services.AddScoped<IComponentTypeServise, ComponentTypeServise>();
 builder.Services.AddScoped<IComponentTypeRepository, ComponentTypeRepository>();
-
+builder.Services.AddScoped<IComponentServise, ComponentServise>();
+builder.Services.AddScoped<IComponentRepository, ComponentRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
