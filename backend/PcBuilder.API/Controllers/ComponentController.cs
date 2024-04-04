@@ -41,7 +41,7 @@ namespace PcBuilder.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("typeid={typeid:guid}/name={name:string}/typeid={charid:guid}/name={value:string}")]
+        [HttpGet("typeid={typeid:guid}/name={name}/typeid={charid:guid}/name={value}")]
         public async Task<ActionResult<List<ComponentResponse>>> GetByFilter(Guid? typeId, string? name, Guid? charid, string? value)
         {
             var components = await _componentServise.GetByFilter(typeId, name, charid, value);
@@ -71,7 +71,7 @@ namespace PcBuilder.API.Controllers
             return Ok();
         }
 
-        [HttpPut("{id:guid}/title={title:string}/desctiption={description:string}/price={price:decimal}")]
+        [HttpPut("{id:guid}/title={title}/desctiption={description}/price={price:decimal}")]
         public async Task<ActionResult<Guid>> Update(Guid id, [FromBody] ComponentRequestPut request)
         {
             if (id == Guid.Empty)
