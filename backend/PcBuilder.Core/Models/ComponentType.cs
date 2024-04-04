@@ -20,7 +20,7 @@
 
             if (name.Length > MAS_SIZE_LENGTH)
             {
-                error = "Поле не мможет быть более 100 символов";
+                error = "Поле не может быть более 100 символов";
             }
 
             if (string.IsNullOrEmpty(name))
