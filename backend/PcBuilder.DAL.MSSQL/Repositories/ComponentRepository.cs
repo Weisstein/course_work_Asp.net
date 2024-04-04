@@ -78,5 +78,46 @@ namespace PcBuilder.DAL.MySQL.Repositories
 
             return await components;
         }
+        
+        public async Task<Guid> Add(Component component)
+        {
+            var componentEntity = new ComponentEntity
+            {
+                Id = component.Id,
+                Title = component.Title,
+                Description = component.Description,
+                Price = component.Price,
+                TypeID = component.TypeID
+            };
+
+            await _dbContext.components.AddAsync(componentEntity);
+            await _dbContext.SaveChangesAsync();
+
+            return componentEntity.Id;
+        }
+
+        public async Task<Guid> Update(Guid id, string title, string description, decimal price)
+        {
+            await _dbContext.components
+                .Where(c => c.Id == id)
+                .ExecuteUpdateAsync(c =>
+                    c.SetProperty(c => c.Title, title)
+                     .SetProperty(c => c.Description, description)
+                     .SetProperty(c => c.Price, price)
+                );
+
+            await _dbContext.SaveChangesAsync();
+            return id;
+        }
+
+        public async Task<Guid> Delete(Guid id)
+        {
+            await _dbContext.components
+                .Where(c => c.Id == id)
+                .ExecuteDeleteAsync();
+            await _dbContext.SaveChangesAsync();
+
+            return id;
+        }
     }
 }
