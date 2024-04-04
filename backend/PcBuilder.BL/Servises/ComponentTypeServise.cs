@@ -26,5 +26,15 @@ namespace PcBuilder.BL.Servises
         {
             return await _componentTypeRepository.Add(componentType);
         }
+
+        public async Task<Guid> Delete(Guid id)
+        {
+           return await _componentTypeRepository.Delete(id);
+        }
+
+        public async Task<Guid> Update(Guid id, string name)
+        {
+            return await _componentTypeRepository.Update(id, name);
+        }
     }
 }

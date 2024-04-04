@@ -30,7 +30,7 @@ namespace PcBuilder.DAL.MySQL.Repositories
         public async Task<ComponentType> GetById(Guid id)
         {
             var componentTypeEntity = await _dbContext.componentTypes
-                .FirstOrDefaultAsync(ct => ct.Id == id);
+                .FirstOrDefaultAsync(ct => ct.Id == id) ?? throw new Exception("");
                 
 
             var componentType = ComponentType.Create(componentTypeEntity.Id, componentTypeEntity.Name).componentType;
@@ -51,6 +51,27 @@ namespace PcBuilder.DAL.MySQL.Repositories
             await _dbContext.SaveChangesAsync();
 
             return componentTypeEntity.Id;
+        }
+
+        public async Task<Guid> Delete(Guid id)
+        {
+            await _dbContext.componentTypes
+                .Where(ct => ct.Id == id)
+                .ExecuteDeleteAsync();
+
+            await _dbContext.SaveChangesAsync();
+            return id;
+        }
+
+        public async Task<Guid> Update(Guid id, string name)
+        {
+            await _dbContext.componentTypes
+                .Where(ct => ct.Id == id)
+                .ExecuteUpdateAsync(ct => 
+                 ct.SetProperty(ct => ct.Name, name));
+            await _dbContext.SaveChangesAsync();
+
+            return id;
         }
     }
 }

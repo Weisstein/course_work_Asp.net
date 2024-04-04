@@ -11,6 +11,10 @@ namespace PcBuilder.DAL.MySQL.Configurations
             builder.HasKey(b => b.Id);
 
             builder
+                .Property(b => b.Name)
+                .IsRequired();
+
+            builder
                 .HasMany(b => b.components)
                 .WithMany(c => c.builds);
         }

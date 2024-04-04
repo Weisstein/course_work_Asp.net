@@ -6,7 +6,7 @@ using PcBuilder.Core.Models;
 namespace PcBuilder.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
 
     public class ComponentTypeController : ControllerBase
     {
@@ -16,7 +16,10 @@ namespace PcBuilder.API.Controllers
         {
             _componentTypeServise = componentTypeServise;
         }
-
+        /// <summary>
+        /// Get all types
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<List<ComponentTypeResponse>>> GetAll()
         {
@@ -27,9 +30,18 @@ namespace PcBuilder.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{id}")]
+        /// <summary>
+        /// Get all types by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id:guid}")]
         public async Task<ActionResult<ComponentTypeResponse>> GetById(Guid id)
         {
+            if (id == Guid.Empty)
+            {
+                return BadRequest("Тип компонента не найден");
+            }
             var types = await _componentTypeServise.GetById(id);
 
             var response = new ComponentTypeResponse(types.Id, types.Name);
@@ -37,7 +49,11 @@ namespace PcBuilder.API.Controllers
             return Ok(response);
         }
 
-
+        /// <summary>
+        /// Create new type
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Guid>> AddType([FromBody] ComponentTypeRequest request)
         {
@@ -53,6 +69,31 @@ namespace PcBuilder.API.Controllers
             await _componentTypeServise.Add(type);
 
             return Ok();
+        }
+
+        [HttpPut("{id:guid}")]
+        public async Task<ActionResult<Guid>> UpdateType(Guid id, [FromBody] ComponentTypeRequest request)
+        {
+            if (id == Guid.Empty)
+            {
+                return BadRequest("Тип компонента не найден");
+            }
+
+            var type = await _componentTypeServise.Update(id,request.Name);
+
+            return Ok(type);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult<Guid>> DeleteType(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return BadRequest("Тип компонента не найден");
+            }
+
+            var type = await _componentTypeServise.Delete(id);
+            return Ok(type);
         }
     }
 }
