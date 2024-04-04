@@ -37,7 +37,7 @@ namespace PcBuilder.DAL.MySQL.Repositories
             return component;
         }
 
-        public async Task<List<Component>> GetByFilter(Guid? typeId, string? name, Guid? charId, string? value)
+        public async Task<List<Component>> GetByFilter(string? name, string? value)
         {
             var querry = (from c in _dbContext.components
                           join ct in _dbContext.componentTypes on c.TypeID equals ct.Id
@@ -54,20 +54,11 @@ namespace PcBuilder.DAL.MySQL.Repositories
                               cc.Value
                           }).AsNoTracking();
 
-            if (typeId != Guid.Empty)
-            {
-                querry = querry.Where(ct => ct.TypeId == typeId);
-            }
-
             if (!string.IsNullOrEmpty(name))
             {
                 querry = querry.Where(ct => ct.Name.Contains(name));
             }
 
-            if (charId != Guid.Empty)
-            {
-                querry = querry.Where(cc => cc.CharId == charId);
-            }
 
             if (!string.IsNullOrEmpty(value))
             {

@@ -33,9 +33,9 @@ namespace PcBuilder.BL.Servises
            return await _componentRepository.GetAll();
         }
 
-        public async Task<List<Component>> GetByFilter(Guid? typeId, string? name, Guid? charId, string? value)
+        public async Task<List<Component>> GetByFilter(string? name, string? value)
         {
-           return await _componentRepository.GetByFilter(typeId, name, charId, value);
+           return await _componentRepository.GetByFilter(name, value);
         }
 
         public async Task<Component> GetById(Guid id)

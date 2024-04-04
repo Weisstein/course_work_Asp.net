@@ -41,10 +41,10 @@ namespace PcBuilder.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("{typeid}/{name}/{charid}/{value}")]
-        public async Task<ActionResult<List<ComponentResponse>>> GetByFilter(Guid? typeId, string? name, Guid? charid, string? value)
+        [HttpGet("filter")]
+        public async Task<ActionResult<List<ComponentResponse>>> GetByFilter(string? name, string? value)
         {
-            var components = await _componentServise.GetByFilter(typeId, name, charid, value);
+            var components = await _componentServise.GetByFilter(name, value);
 
             var response = components.Select(c => new ComponentResponse(c.Id, c.Title, c.Description, c.Price, c.TypeID));
 
@@ -71,15 +71,15 @@ namespace PcBuilder.API.Controllers
             return Ok();
         }
 
-        [HttpPut("{id:guid}/{title}/{description}/[?]{price:decimal}")]
+        [HttpPut("{id:guid}")]
         public async Task<ActionResult<Guid>> Update(Guid id, [FromBody] ComponentRequestPut request)
         {
             if (id == Guid.Empty)
             {
                 return BadRequest("компонент не найден");
             }
-
-            var component = _componentServise.Update(id, request.Title, request.Description, request.Price);
+            
+            var component = await _componentServise.Update(id, request.Title, request.Description, request.Price);
 
             return Ok(component);
         }
@@ -92,7 +92,7 @@ namespace PcBuilder.API.Controllers
                 return BadRequest("компонент не найден");
             }
 
-            var component = _componentServise.Delete(id);
+            var component = await _componentServise.Delete(id);
 
             return Ok(component);
         }
