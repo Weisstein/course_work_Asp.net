@@ -19,6 +19,14 @@ namespace PcBuilder.DAL.MySQL.Configurations
                 .IsRequired();
 
             builder
+                .Property(c => c.Description)
+                .IsRequired();
+
+            builder 
+                .Property(c => c.Price)
+                .IsRequired();
+
+            builder
                 .HasMany(c => c.Characts)
                 .WithOne(cc => cc.component)
                 .HasForeignKey(cc => cc.componentId);
