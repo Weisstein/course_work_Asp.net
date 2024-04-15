@@ -70,11 +70,10 @@ namespace PcBuilder.DAL.MySQL.Repositories
                                              ComponentTypeID = c.TypeID,
                                          }).AsNoTracking().ToListAsync();
             } 
-            else
+            
+            if (!string.IsNullOrEmpty(name))
             {
-                if (!string.IsNullOrEmpty(name))
-                {
-                    componentEntity = await (from c in _dbContext.components
+                   componentEntity = await (from c in _dbContext.components
                                          join ct in _dbContext.componentTypes on c.TypeID equals ct.Id
                                          where EF.Functions.Like(ct.Name, name)
                                          select new
@@ -85,9 +84,8 @@ namespace PcBuilder.DAL.MySQL.Repositories
                                              ComponentPrice = c.Price,
                                              ComponentTypeID = c.TypeID,
                                          }).AsNoTracking().ToListAsync();
-                }
             }
-
+          
            
 
             var components = componentEntity
