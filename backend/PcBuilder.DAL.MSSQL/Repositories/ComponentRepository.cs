@@ -42,8 +42,8 @@ namespace PcBuilder.DAL.MySQL.Repositories
             var componentEntity = await (from c in _dbContext.components
                           join ct in _dbContext.componentTypes on c.TypeID equals ct.Id
                           join cc in _dbContext.componentCharacts on c.Id equals cc.componentId
-                          where ct.Name.Contains(name)
-                          //where cc.Value.Contains(value)
+                          where EF.Functions.Like(ct.Name.ToString(),$"{name}")
+                          //where EF.Functions.Like(cc.Value, $"{value}")
                           select new
                           {
                               ComponentId = c.Id,
