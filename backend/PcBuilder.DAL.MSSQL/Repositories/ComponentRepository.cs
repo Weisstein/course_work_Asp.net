@@ -2,6 +2,7 @@
 using PcBuilder.Core.Models;
 using PcBuilder.DAL.MySQL.Entities;
 using System.Runtime.InteropServices.ObjectiveC;
+using System.Threading.Tasks.Dataflow;
 
 namespace PcBuilder.DAL.MySQL.Repositories
 {
@@ -42,8 +43,8 @@ namespace PcBuilder.DAL.MySQL.Repositories
             var componentEntity = await (from c in _dbContext.components
                           join ct in _dbContext.componentTypes on c.TypeID equals ct.Id
                           join cc in _dbContext.componentCharacts on c.Id equals cc.componentId
-                          where EF.Functions.Like(ct.Name.ToString(),$"{name}")
-                          //where EF.Functions.Like(cc.Value, $"{value}")
+                          where EF.Functions.Like(ct.Name,name)
+                          where EF.Functions.Like(cc.Value,value)
                           select new
                           {
                               ComponentId = c.Id,
@@ -52,6 +53,42 @@ namespace PcBuilder.DAL.MySQL.Repositories
                               ComponentPrice = c.Price,
                               ComponentTypeID = c.TypeID,
                           }).AsNoTracking().ToListAsync();
+
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(value))
+            {
+                componentEntity = await (from c in _dbContext.components
+                                         join ct in _dbContext.componentTypes on c.TypeID equals ct.Id
+                                         join cc in _dbContext.componentCharacts on c.Id equals cc.componentId
+                                         where EF.Functions.Like(ct.Name, name)
+                                         where EF.Functions.Like(cc.Value, value)
+                                         select new
+                                         {
+                                             ComponentId = c.Id,
+                                             ComponentTitle = c.Title,
+                                             ComponentDesc = c.Description,
+                                             ComponentPrice = c.Price,
+                                             ComponentTypeID = c.TypeID,
+                                         }).AsNoTracking().ToListAsync();
+            } 
+            else
+            {
+                if (!string.IsNullOrEmpty(name))
+                {
+                    componentEntity = await (from c in _dbContext.components
+                                         join ct in _dbContext.componentTypes on c.TypeID equals ct.Id
+                                         where EF.Functions.Like(ct.Name, name)
+                                         select new
+                                         {
+                                             ComponentId = c.Id,
+                                             ComponentTitle = c.Title,
+                                             ComponentDesc = c.Description,
+                                             ComponentPrice = c.Price,
+                                             ComponentTypeID = c.TypeID,
+                                         }).AsNoTracking().ToListAsync();
+                }
+            }
+
+           
 
             var components = componentEntity
                 .Select(c => Component.Create(c.ComponentId,c.ComponentTitle,c.ComponentDesc,c.ComponentPrice,c.ComponentTypeID).component)
