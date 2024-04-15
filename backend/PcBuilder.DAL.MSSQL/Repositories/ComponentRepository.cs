@@ -39,34 +39,25 @@ namespace PcBuilder.DAL.MySQL.Repositories
 
         public async Task<List<Component>> GetByFilter(string? name, string? value)
         {
-            var querry = (from c in _dbContext.components
+            var componentEntity = await (from c in _dbContext.components
                           join ct in _dbContext.componentTypes on c.TypeID equals ct.Id
-                          join cc in _dbContext.componentCharacts on c.Id equals cc.componentId 
+                          join cc in _dbContext.componentCharacts on c.Id equals cc.componentId
+                          where ct.Name.Contains(name)
+                          //where cc.Value.Contains(value)
                           select new
                           {
-                              c.Id,
-                              c.Title,
-                              c.Description,
-                              c.Price,
-                              TypeId = ct.Id,
-                              ct.Name,
-                              cc.Value
-                          }).AsNoTracking();
+                              ComponentId = c.Id,
+                              ComponentTitle = c.Title,
+                              ComponentDesc = c.Description,
+                              ComponentPrice = c.Price,
+                              ComponentTypeID = c.TypeID,
+                          }).AsNoTracking().ToListAsync();
 
-            if (!string.IsNullOrEmpty(name))
-            {
-                querry = querry.Where(ct => ct.Name == name);
-            }
+            var components = componentEntity
+                .Select(c => Component.Create(c.ComponentId,c.ComponentTitle,c.ComponentDesc,c.ComponentPrice,c.ComponentTypeID).component)
+                .ToList();
 
-
-            if (!string.IsNullOrEmpty(value))
-            {
-                querry = querry.Where(cc => cc.Value == value);
-            }
-
-            var components = querry.Select(c => Component.Create(c.Id, c.Title, c.Description, c.Price, c.TypeId).component).ToListAsync();
-
-            return await components;
+            return components;
         }
 
         public async Task<Guid> Add(Component component)
