@@ -20,6 +20,7 @@ namespace PcBuilder.DAL.MySQL.Configurations
 
             builder
                 .Property(c => c.Description)
+                .HasPrecision(10,2)
                 .IsRequired();
 
             builder 
