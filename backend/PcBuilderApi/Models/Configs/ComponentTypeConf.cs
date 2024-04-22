@@ -9,10 +9,13 @@ namespace PcBuilderApi.Models.Configs
         {
            builder.HasKey(ct => ct.Id);
 
+           builder.Property(ct => ct.Id)
+                  .UseMySqlIdentityColumn();
+
            builder.HasAlternateKey(ct => ct.Name);
 
            builder.Property(ct => ct.Name)
-                .HasMaxLength(256)
+                .HasMaxLength(128)
                 .IsRequired();
         }
     }
