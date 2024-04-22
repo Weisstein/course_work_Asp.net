@@ -4,7 +4,7 @@ using PcBuilderApi.Models.Configs;
 
 namespace PcBuilderApi.Data
 {
-    public class DataContext(DbContextOptions<DbContext> options) : DbContext(options)
+    public class DataContext(DbContextOptions<DataContext> options) : DbContext(options)
     {
         public DbSet<ComponentType> componentTypes { get; set; }
         public DbSet<Component> components { get; set; }
