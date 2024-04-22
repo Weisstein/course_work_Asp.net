@@ -21,6 +21,13 @@ namespace PcBuilderApi.Models.Configs
             builder.Property(c => c.Price)
                 .HasPrecision(10, 2)
                 .IsRequired();
+
+            builder.HasOne(c => c.Type)
+                .WithMany(ct => ct.Components)
+                .HasForeignKey(c => c.TypeId);
+
+            builder.HasMany(c => c.Builds)
+                .WithMany(b => b.Components);
         }
     }
 }
