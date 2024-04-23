@@ -1,4 +1,6 @@
-﻿namespace PcBuilderApi.Models
+﻿using System.Text.Json.Serialization;
+
+namespace PcBuilderApi.Models
 {
     public class Component
     {
@@ -12,10 +14,10 @@
 
         public int TypeId { get; set; }
 
-        public ComponentType? Type { get; set;}
+        public ComponentType? Type { get; set; }
 
-        public ICollection<ComponentCharact>? Characts { get; set; } 
-
+        public ICollection<ComponentCharact>? Characts { get; set; }
+        [JsonIgnore]
         public ICollection<Build>? Builds { get; set; }
     }
 }
