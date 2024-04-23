@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PcBuilderApi.Data;
 using PcBuilderApi.Dtos;
+using System.Collections;
 
 namespace PcBuilderApi.Controllers
 {
@@ -44,30 +45,27 @@ namespace PcBuilderApi.Controllers
         }
 
         [HttpGet("filter")]
-        public async Task<ActionResult<ComponentGet>> GetByFilter(string typeName, string value)
+        public async Task<ActionResult<ComponentGet>> GetByFilter(string? typeName, string? value)
         {
-            var components = _dataContext.components
-                .Include(c => c.Type)
-                .Include(c => c.Characts);
-                
+            var components = _dataContext.components.Where(predicate: c => c.Type.Name.Contains(typeName)).AsNoTracking();
 
-            if (!string.IsNullOrEmpty(typeName))
-            {
-                components.Where(c => c.Type.Name.Contains(typeName));
-            }
+            //if (!string.IsNullOrEmpty(typeName))
+            //{
+            //    components;
+            //}
 
             if (!string.IsNullOrEmpty(value))
             {
-                components.Include(c => c.Characts.Where(cc => cc.Value.Contains(value)));
+                
             }
+
+            await components
+                .ToListAsync();
 
             if (components == null)
             {
                 return NotFound();
             }
-
-           await components.AsNoTracking()
-                .ToListAsync();
 
             var response = components.Select(c => new ComponentGet(c.Id, c.Name, c.Description, c.Price));
             return Ok(response);
