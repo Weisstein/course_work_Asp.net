@@ -18,6 +18,7 @@
         string Name,
         string Description,
         decimal Price,
+        int TypeId,
         List<ComponentCharactPostPut> Characts
     );
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PcBuilderApi.Data;
 using PcBuilderApi.Dtos;
 using PcBuilderApi.Models;
+using System.Reflection;
 
 namespace PcBuilderApi.Controllers
 {
@@ -45,29 +46,31 @@ namespace PcBuilderApi.Controllers
         }
 
         [HttpGet("filter")]
-        public async Task<ActionResult<ComponentGet>> GetByFilter(string? typeName, string? value)
+        public async Task<ActionResult<ComponentGet>> GetByFilter(string? typeName, string? value, decimal min, decimal max)
         {
-            var components = _dataContext.components.Where(predicate: c => c.Type.Name.Contains(typeName)).AsNoTracking();
-
-            //if (!string.IsNullOrEmpty(typeName))
-            //{
-            //    components;
-            //}
-
-            if (!string.IsNullOrEmpty(value))
-            {
-
-            }
+            var components = from c in _dataContext.components
+                             join ct in _dataContext.componentTypes on c.TypeId equals ct.Id
+                             join cc in _dataContext.charact on c.Id equals cc.ComponentId
+                             where ct.Name.Contains(typeName) || cc.Value.Contains(value) || 
+                             (c.Price >= min && c.Price <= max)
+                             select new
+                             {
+                                 c.Id,
+                                 c.Name,
+                                 c.Description,
+                                 c.Price
+                             };               
 
             await components
+                .AsNoTracking()
                 .ToListAsync();
 
-            if (components == null)
+            if (!components.Any())
             {
                 return NotFound();
             }
 
-            var response = components.Select(c => new ComponentGet(c.Id, c.Name, c.Description, c.Price));
+            var response = components.Select(c => new ComponentGet(c.Id, c.Name, c.Description, c.Price));                        
             return Ok(response);
         }
 
@@ -78,7 +81,8 @@ namespace PcBuilderApi.Controllers
             {
                 Name = request.Name,
                 Description = request.Description,
-                Price = request.Price
+                Price = request.Price,
+                TypeId = request.TypeId
             };
 
             var caract = request.Characts.Select(cc => new ComponentCharact { Name = cc.Name, Value = cc.Value, Component = newComponent}).ToList();
