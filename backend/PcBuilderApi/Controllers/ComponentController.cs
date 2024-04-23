@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PcBuilderApi.Data;
 using PcBuilderApi.Dtos;
-using System.Collections;
 
 namespace PcBuilderApi.Controllers
 {

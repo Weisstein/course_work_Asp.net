@@ -1,6 +1,4 @@
-﻿using PcBuilderApi.Controllers;
-
-namespace PcBuilderApi.Dtos
+﻿namespace PcBuilderApi.Dtos
 {
     public record struct ComponentGet
     (

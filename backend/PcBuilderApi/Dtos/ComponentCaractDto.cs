@@ -1,4 +1,4 @@
-﻿namespace PcBuilderApi.Controllers
+﻿namespace PcBuilderApi.Dtos
 {
     public record struct ComponentCharactPostPut
     (
