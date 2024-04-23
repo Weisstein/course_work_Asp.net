@@ -16,7 +16,7 @@ namespace PcBuilderApi.Controllers
         public ComponentTypeController(DataContext dataContext) {  _dataContext = dataContext; }
 
         [HttpGet]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult<ComponentTypeGet>> GetAll()
         {
             var componentType = await _dataContext.componentTypes
                 .AsNoTracking()
@@ -28,7 +28,7 @@ namespace PcBuilderApi.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult> GetById(int id)
+        public async Task<ActionResult<ComponentTypeGet>> GetById(int id)
         {
             var componentType = await _dataContext.componentTypes
                 .AsNoTracking()
@@ -44,7 +44,7 @@ namespace PcBuilderApi.Controllers
         }
 
         [HttpGet("{name}")]
-        public async Task<ActionResult> GetById(string name)
+        public async Task<ActionResult<ComponentTypeGet>> GetById(string name)
         {
             var componentType = await _dataContext.componentTypes
                 .AsNoTracking()
@@ -91,12 +91,32 @@ namespace PcBuilderApi.Controllers
                 return NotFound();            
             }
 
-           await _dataContext.componentTypes
+            await _dataContext.componentTypes
                 .Where(ct => ct.Id == id)
                 .ExecuteUpdateAsync(ct => 
                 ct.SetProperty(ct => ct.Name, request.Name)
                 );
+            await _dataContext.SaveChangesAsync();
 
+            return Ok(id);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var deletedType = await _dataContext.componentTypes
+                .AsNoTracking()
+                .FirstOrDefaultAsync(ct => ct.Id == id);
+
+            if (deletedType == null)
+            {
+                return NotFound();
+            }
+
+            await _dataContext.componentTypes
+                .Where(ct => ct.Id == id)
+                .ExecuteDeleteAsync();
+            await _dataContext.SaveChangesAsync();
             return Ok(id);
         }
     }
