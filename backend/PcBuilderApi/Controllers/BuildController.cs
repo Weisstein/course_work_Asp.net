@@ -75,6 +75,16 @@ namespace PcBuilderApi.Controllers
         [HttpPut]
         public async Task<ActionResult> Update(int id)
         {
+            var build = await _dataContext.builds
+                .AsNoTracking()
+                .Include(b => b.Components)
+                .FirstOrDefaultAsync(b => b.Id == id);
+
+            if (build == null)
+            {
+                return NotFound();
+            }
+
 
         }
     }
