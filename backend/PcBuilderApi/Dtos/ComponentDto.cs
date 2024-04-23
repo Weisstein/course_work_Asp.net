@@ -1,4 +1,6 @@
-﻿namespace PcBuilderApi.Dtos
+﻿using PcBuilderApi.Controllers;
+
+namespace PcBuilderApi.Dtos
 {
     public record struct ComponentGet
     (
@@ -15,6 +17,9 @@
 
     public record struct ComponentPost
     (
-
+        string Name,
+        string Description,
+        decimal Price,
+        List<ComponentCharactPostPut> Characts
     );
 }

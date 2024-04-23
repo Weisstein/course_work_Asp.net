@@ -24,7 +24,7 @@ namespace PcBuilderApi.Controllers
                 .AsNoTracking()
                 .ToListAsync();
 
-            var response = components.Select(c => new ComponentGet(c.Id,c.Name,c.Description,c.Price));
+            var response = components.Select(c => new ComponentGet(c.Id, c.Name, c.Description, c.Price));
             return Ok(response);
         }
 
@@ -56,7 +56,7 @@ namespace PcBuilderApi.Controllers
 
             if (!string.IsNullOrEmpty(value))
             {
-                
+
             }
 
             await components
@@ -69,6 +69,12 @@ namespace PcBuilderApi.Controllers
 
             var response = components.Select(c => new ComponentGet(c.Id, c.Name, c.Description, c.Price));
             return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Add()
+        {
+
         }
     }
 }
