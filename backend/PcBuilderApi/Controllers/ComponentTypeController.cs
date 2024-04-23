@@ -44,7 +44,7 @@ namespace PcBuilderApi.Controllers
         }
 
         [HttpGet("{name}")]
-        public async Task<ActionResult<ComponentType>> GetById(string name)
+        public async Task<ActionResult> GetById(string name)
         {
             var componentType = await _dataContext.componentTypes
                 .AsNoTracking()
@@ -76,10 +76,28 @@ namespace PcBuilderApi.Controllers
             await _dataContext.SaveChangesAsync();
 
 
-            return Ok();
+            return Ok(newType.Id);
         }
 
         [HttpPut]
-        public async Task<ActionResult<>>
+        public async Task<ActionResult> Update(int id, ComponentTypePostPut request)
+        {
+            var oldType = await _dataContext.componentTypes
+                .AsNoTracking()
+                .FirstOrDefaultAsync(ct => ct.Id == id);
+
+            if (oldType == null) 
+            {
+                return NotFound();            
+            }
+
+           await _dataContext.componentTypes
+                .Where(ct => ct.Id == id)
+                .ExecuteUpdateAsync(ct => 
+                ct.SetProperty(ct => ct.Name, request.Name)
+                );
+
+            return Ok(id);
+        }
     }
 }
