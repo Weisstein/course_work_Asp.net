@@ -16,7 +16,7 @@ namespace PcBuilderApi.Controllers
         public ComponentTypeController(DataContext dataContext) {  _dataContext = dataContext; }
 
         [HttpGet]
-        public async Task<ActionResult<ComponentType>> GetAll()
+        public async Task<ActionResult> GetAll()
         {
             var componentType = await _dataContext.componentTypes
                 .AsNoTracking()
@@ -28,7 +28,7 @@ namespace PcBuilderApi.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ComponentType>> GetById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
             var componentType = await _dataContext.componentTypes
                 .AsNoTracking()
@@ -40,7 +40,6 @@ namespace PcBuilderApi.Controllers
             }
 
             var response = new ComponentTypeGet(componentType.Id, componentType.Name);
-
             return Ok(response);
         }
 
@@ -79,5 +78,8 @@ namespace PcBuilderApi.Controllers
 
             return Ok();
         }
+
+        [HttpPut]
+        public async Task<ActionResult<>>
     }
 }
