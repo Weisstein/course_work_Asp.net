@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PcBuilderApi.Data;
 using PcBuilderApi.Dtos;
+using PcBuilderApi.Models;
 
 namespace PcBuilderApi.Controllers
 {
@@ -71,9 +72,24 @@ namespace PcBuilderApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add()
+        public async Task<ActionResult> Add(ComponentPost request)
         {
+            var newComponent = new Component
+            {
+                Name = request.Name,
+                Description = request.Description,
+                Price = request.Price
+            };
 
+            var caract = request.Characts.Select(cc => new ComponentCharact { Name = cc.Name, Value = cc.Value, Component = newComponent}).ToList();
+            
+            newComponent.Characts = caract;
+
+            _dataContext.components.Add(newComponent);
+            await _dataContext.SaveChangesAsync();
+
+
+            return Ok(newComponent.Id);
         }
     }
 }
