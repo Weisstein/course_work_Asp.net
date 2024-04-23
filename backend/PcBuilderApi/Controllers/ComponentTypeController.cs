@@ -9,11 +9,11 @@ namespace PcBuilderApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ComponentTypeController : ControllerBase
     {
         private readonly DataContext _dataContext;
         
-        public ValuesController(DataContext dataContext) {  _dataContext = dataContext; }
+        public ComponentTypeController(DataContext dataContext) {  _dataContext = dataContext; }
 
         [HttpGet]
         public async Task<ActionResult<ComponentType>> GetAll()
@@ -41,6 +41,22 @@ namespace PcBuilderApi.Controllers
 
             var response = new ComponentTypeGet(componentType.Id, componentType.Name);
 
+            return Ok(response);
+        }
+
+        [HttpGet("{name}")]
+        public async Task<ActionResult<ComponentType>> GetById(string name)
+        {
+            var componentType = await _dataContext.componentTypes
+                .AsNoTracking()
+                .FirstOrDefaultAsync(ct => ct.Name.Contains(name));
+
+            if (componentType == null)
+            {
+                return NotFound();
+            }
+
+            var response = new ComponentTypeGet(componentType.Id, componentType.Name);
             return Ok(response);
         }
 
