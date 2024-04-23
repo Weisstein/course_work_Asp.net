@@ -92,8 +92,8 @@ namespace PcBuilderApi.Controllers
 
             await _dataContext.componentTypes
                 .Where(ct => ct.Id == id)
-                .ExecuteUpdateAsync(ct => 
-                ct.SetProperty(ct => ct.Name, request.Name)
+                .ExecuteUpdateAsync(ct => ct
+                .SetProperty(ct => ct.Name, request.Name)
                 );
             await _dataContext.SaveChangesAsync();
 

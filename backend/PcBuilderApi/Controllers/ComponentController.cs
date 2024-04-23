@@ -95,5 +95,48 @@ namespace PcBuilderApi.Controllers
 
             return Ok(newComponent.Id);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> Update(int id, ComponentPut request)
+        {
+            var oldComponent = await _dataContext.components
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (oldComponent == null) 
+            { 
+                return NotFound();
+            }
+
+             _dataContext.components
+                .Where(c => c.Id == id)
+                .ExecuteUpdate( c => 
+                    c.SetProperty(c => c.Name, request.Name)
+                    .SetProperty(c => c.Description, request.Description)
+                    .SetProperty(c => c.Price, request.Price)
+                );
+
+            await _dataContext.SaveChangesAsync();
+            return Ok(id);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var deletedComponent = await _dataContext.components
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (deletedComponent == null)
+            {
+                return NotFound();
+            }
+
+            _dataContext.components
+                .Where(c => c.Id == id)
+                .ExecuteDelete();
+            await _dataContext.SaveChangesAsync();
+            return Ok(id);
+        }
     }
 }

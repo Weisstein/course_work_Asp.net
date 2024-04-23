@@ -10,7 +10,9 @@
 
     public record struct ComponentPut
     (
-
+        string Name,
+        string Description,
+        decimal Price
     );
 
     public record struct ComponentPost
