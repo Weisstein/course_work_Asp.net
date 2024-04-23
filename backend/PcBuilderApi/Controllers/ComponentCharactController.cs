@@ -52,6 +52,9 @@ namespace PcBuilderApi.Controllers
                 .SetProperty(cc => cc.Name, request.Name)
                 .SetProperty(cc => cc.Value, request.Value)
                 );
+            await _dataContext.SaveChangesAsync();
+
+            return Ok(id);
         }
     }
 }
