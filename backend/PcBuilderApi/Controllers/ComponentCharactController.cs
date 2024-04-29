@@ -69,7 +69,7 @@ namespace PcBuilderApi.Controllers
             };
 
             _dataContext.charact.Add(componentCharact);
-            _dataContext.SaveChanges();
+            await _dataContext.SaveChangesAsync();
             return Ok(componentCharact.Id);
         }
     }
