@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PcBuilderApi.Data;
 using PcBuilderApi.Dtos;
@@ -93,8 +92,8 @@ namespace PcBuilderApi.Controllers
 
             await _dataContext.componentTypes
                 .Where(ct => ct.Id == id)
-                .ExecuteUpdateAsync(ct => 
-                ct.SetProperty(ct => ct.Name, request.Name)
+                .ExecuteUpdateAsync(ct => ct
+                .SetProperty(ct => ct.Name, request.Name)
                 );
             await _dataContext.SaveChangesAsync();
 
