@@ -10,7 +10,7 @@ namespace PcBuilderApi.Dtos
         ICollection<Component> Components
     );
 
-    public record struct BuildPost
+    public record struct BuildPostPut
     (
         string Name,
         string Descriptions,

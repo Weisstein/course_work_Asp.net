@@ -4,6 +4,10 @@ namespace PcBuilderApi.Models
 {
     public class Component
     {
+        public Component() 
+        { 
+            this.Builds = new List<Build>();
+        }
         public int Id { get; set; }
 
         public string Name { get; set; } = string.Empty;
