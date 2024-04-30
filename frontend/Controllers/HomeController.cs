@@ -1,6 +1,8 @@
 using frontend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 namespace frontend.Controllers
 {
@@ -8,19 +10,27 @@ namespace frontend.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        private readonly HttpClient _httpClient;
+        Uri baseAddress = new Uri("http://localhost:5088/api/");
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = baseAddress;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
+            List<BuildViewModel> builds = new List<BuildViewModel>();
+            using (var response = await _httpClient.GetAsync(baseAddress + "Build/GetAll"))
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                builds = JsonConvert.DeserializeObject<List<BuildViewModel>>(data);
+            }
+                
 
-        public IActionResult Privacy()
-        {
-            return View();
+            return View(builds);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
