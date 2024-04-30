@@ -6,4 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Models\DTOs\Новая папка\**" />
+    <Content Remove="Models\DTOs\Новая папка\**" />
+    <EmbeddedResource Remove="Models\DTOs\Новая папка\**" />
+    <None Remove="Models\DTOs\Новая папка\**" />
+  </ItemGroup>
+
 </Project>
