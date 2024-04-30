@@ -1,20 +1,31 @@
 ﻿@model Build
 @{
+    
     ViewData["Title"] = "AddBuild";
 }
-<div class="d-grid gap-0">
-    <div class="mb-3">
-        <label class="form-label">Наименование сборки</label>
-        <input class="form-control border-secondary bg-dark text-secondary" />
-    </div>
-    <div>
-        <label class="form-label">Описание сборки</label>
-        <textarea class="form-control border-secondary bg-dark text-secondary" rows="3"></textarea>
-    </div>
-</div>
-<div>
-    <div class="d-grid gap-5">
 
+<form asp-action="AddBuild" class="d-flex">
+    <div class="form-group flex-fill justify-content-start">
+        <div>
+            <label asp-for="Name" class="form-label">Наименование сборки</label>
+            <span asp-validation-for="Name" class="text-danger"></span>
+            <input asp-for="Name" class="form-control border-secondary bg-dark text-secondary"/>
+        </div>
+        <div>
+            <label class="form-label">Описание сборки</label>
+            <textarea class="form-control border-secondary bg-dark text-secondary" rows="3"></textarea>
+        </div>
+        <div>
+            
+        </div>
     </div>
-</div>
-
+    <div class="flex-fill justify-content-end" style="margin-left: 100px; margin-top: 30px">
+        <div class="border rounded border-secondary">
+            <p class="p-2">Стоимость ПК</p>
+            <p class="p-2">
+               
+            </p>
+            <button type="submit" class="btn btn-outline-secondary border-none"> Сохранить </button>
+        </div>
+    </div>
+</form>

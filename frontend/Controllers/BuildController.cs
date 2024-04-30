@@ -25,6 +25,8 @@ namespace frontend.Controllers
             return View();
         }
 
+
+
         [HttpGet]
         public ViewResult AddBuild()
         {
@@ -32,24 +34,23 @@ namespace frontend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddBuild(Build build, List<int> componentIds)
+        public async Task<IActionResult> AddBuild(Build build)
         {
-           
+            List<int> componentsIds = new List<int>();
+            foreach (var item in build.Components)
+            {
+                componentsIds.Add(item.Id);
+            }
 
             if (ModelState.IsValid)
             {
                 BuildPostPut post = new BuildPostPut(
                 build.Name,
                 build.Description,
-                componentIds
+                componentsIds
                 );
                 StringContent content = new StringContent(JsonConvert.SerializeObject(post), Encoding.UTF8, "application/json");
-                using (var response = await _httpClient.PostAsync(baseAddress + "Build/Add", content))
-                {
-                    string data = response.Content.ReadAsStringAsync().Result;
-                    build = JsonConvert.DeserializeObject<Build>(data);
-                }
-                return View(build);
+                await _httpClient.PostAsync(baseAddress + "Build/Add", content);
             }
             return View();
         }
