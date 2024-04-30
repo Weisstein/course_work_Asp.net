@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Models\DTOs\Новая папка\**" />
+    <Compile Remove="Models\Новая папка\**" />
     <Content Remove="Models\DTOs\Новая папка\**" />
+    <Content Remove="Models\Новая папка\**" />
     <EmbeddedResource Remove="Models\DTOs\Новая папка\**" />
+    <EmbeddedResource Remove="Models\Новая папка\**" />
     <None Remove="Models\DTOs\Новая папка\**" />
+    <None Remove="Models\Новая папка\**" />
   </ItemGroup>
 
   <ItemGroup>

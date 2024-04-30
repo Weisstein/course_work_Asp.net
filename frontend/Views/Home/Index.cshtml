@@ -1,20 +1,20 @@
-﻿@model IEnumerable<BuildViewModel>
+﻿@model IEnumerable<Build>
 @{
-    ViewData["Title"] = "Builds";
+    Layout = "_Layout"; ViewData["Title"] = "Builds";
 }
 
 <div class="text-center">
     <h1 class="display-4">Сборки</h1>
     @foreach (var build in Model)
     {
-       <div class="d-grid gap-0">
-            <button type="button" class="btn btn-outline-secondary btn-outline-primary " asp-controller="Build" asp-action="Index" asp-route-id="@build.Id">
+       <div class="d-grid gap-2">
+            <a type="button" class="btn btn-outline-secondary btn-outline-primary " asp-controller="Build" asp-action="Index" asp-route-id="@build.Id">
                 Сборка
                 @build.Name
-           </button>
-            <button type="button" class="btn btn-outline-secondary btn-outline-primary" asp-controller="Build" asp-action="Create">
-
-           </button>
+           </a>
+            <a type="button" class="btn btn-outline-secondary btn-outline-primary" asp-controller="Build" asp-action="AddBuild">
+                Создать новую сборку
+           </a>
        </div>
     }
 </div>

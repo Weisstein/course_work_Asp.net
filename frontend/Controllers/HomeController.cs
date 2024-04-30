@@ -22,11 +22,11 @@ namespace frontend.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<BuildViewModel> builds = new List<BuildViewModel>();
+            List<Build> builds = new List<Build>();
             using (var response = await _httpClient.GetAsync(baseAddress + "Build/GetAll"))
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                builds = JsonConvert.DeserializeObject<List<BuildViewModel>>(data);
+                builds = JsonConvert.DeserializeObject<List<Build>>(data);
             }
                 
 

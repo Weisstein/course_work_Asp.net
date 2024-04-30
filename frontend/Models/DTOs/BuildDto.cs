@@ -7,13 +7,13 @@ namespace frontend.Models.DTOs
          int Id,
          string Name,
          string Description,
-         ICollection<Component> Components
+         ICollection<System.ComponentModel.Component> Components
      );
 
     public record struct BuildPostPut
     (
         string Name,
         string Descriptions,
-        List<int> componentIds
+        List<int> ComponentIds
     );
 }
