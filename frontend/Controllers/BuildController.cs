@@ -27,7 +27,7 @@ namespace frontend.Controllers
             return View();
         }
 
-        [HttpGet]
+        
         public async Task<IActionResult> AddBuild()
         {
             List<Component> components = new List<Component>();
