@@ -1,6 +1,7 @@
 ﻿using frontend.Models;
 using frontend.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -11,6 +12,7 @@ namespace frontend.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly HttpClient _httpClient;
         Uri baseAddress = new Uri("http://localhost:5088/api/");
+       
 
         public BuildController(ILogger<HomeController> logger)
         {
@@ -25,11 +27,17 @@ namespace frontend.Controllers
             return View();
         }
 
-
-
         [HttpGet]
-        public ViewResult AddBuild()
+        public async Task<IActionResult> AddBuild()
         {
+            List<Component> components = new List<Component>();
+            using (var response = await _httpClient.GetAsync(baseAddress + "Component/GetByFilter?typeName=Видеокарта"))
+            {
+                string data = response.Content.ReadAsStringAsync().Result;
+                components = JsonConvert.DeserializeObject<List<Component>>(data);
+            }
+            ViewBag.Components = new SelectList(components,"Id","Name",components);
+            ViewBag.Price = 0;
             return View();
         }
 
@@ -37,10 +45,16 @@ namespace frontend.Controllers
         public async Task<IActionResult> AddBuild(Build build)
         {
             List<int> componentsIds = new List<int>();
-            foreach (var item in build.Components)
-            {
-                componentsIds.Add(item.Id);
+            if (build.Components.Count != 0) 
+            { 
+                
+                foreach (var item in build.Components)
+                {
+                    componentsIds.Add(item.Id);
+                    ViewBag.Price += item.Price; 
+                }
             }
+            
 
             if (ModelState.IsValid)
             {
@@ -51,6 +65,7 @@ namespace frontend.Controllers
                 );
                 StringContent content = new StringContent(JsonConvert.SerializeObject(post), Encoding.UTF8, "application/json");
                 await _httpClient.PostAsync(baseAddress + "Build/Add", content);
+                return RedirectToAction("Index","Home");
             }
             return View();
         }

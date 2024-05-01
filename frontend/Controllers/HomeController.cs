@@ -28,8 +28,6 @@ namespace frontend.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;
                 builds = JsonConvert.DeserializeObject<List<Build>>(data);
             }
-                
-
             return View(builds);
         }
 

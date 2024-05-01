@@ -3,18 +3,19 @@
     Layout = "_Layout"; ViewData["Title"] = "Builds";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Сборки</h1>
+
+    <h1 class="h1 text-center">Сборки</h1>
     @foreach (var build in Model)
     {
-       <div class="d-grid gap-2">
+       <div class="row m-2 w-100">
             <a type="button" class="btn btn-outline-secondary btn-outline-primary " asp-controller="Build" asp-action="Index" asp-route-id="@build.Id">
                 Сборка
                 @build.Name
            </a>
        </div>
     }
-    <a type="button" class="d-grid gap-2 btn btn-outline-secondary btn-outline-primary" asp-controller="Build" asp-action="AddBuild">
+    <div class="row m-2 w-100">
+    <a type="button" class="btn btn-outline-secondary btn-outline-primary" asp-controller="Build" asp-action="AddBuild">
         Создать новую сборку
     </a>
-</div>
+    </div>

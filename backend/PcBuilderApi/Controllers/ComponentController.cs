@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace PcBuilderApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ComponentController : ControllerBase
     {
@@ -45,8 +45,8 @@ namespace PcBuilderApi.Controllers
             return Ok(response);
         }
 
-        [HttpGet("filter")]
-        public async Task<ActionResult<ComponentGet>> GetByFilter(string? typeName, string? value, decimal min, decimal max)
+        [HttpGet]
+        public async Task<ActionResult<ComponentGet>> GetByFilter(string? typeName, string? value, decimal? min, decimal? max)
         {
             var components = from c in _dataContext.components
                              join ct in _dataContext.componentTypes on c.TypeId equals ct.Id
