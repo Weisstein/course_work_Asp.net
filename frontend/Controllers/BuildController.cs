@@ -27,8 +27,7 @@ namespace frontend.Controllers
             return View();
         }
 
-        
-        public async Task<IActionResult> AddBuild()
+        private async void DropDownList()
         {
             List<Component> components = new List<Component>();
             using (var response = await _httpClient.GetAsync(baseAddress + "Component/GetByFilter?typeName=Видеокарта"))
@@ -36,7 +35,12 @@ namespace frontend.Controllers
                 string data = response.Content.ReadAsStringAsync().Result;
                 components = JsonConvert.DeserializeObject<List<Component>>(data);
             }
-            ViewBag.Components = new SelectList(components,"Id","Name",components);
+            ViewBag.Components = new SelectList(components, "Id", "Name", components);
+        } 
+
+        public async Task<IActionResult> AddBuild()
+        {
+            DropDownList();
             ViewBag.Price = 0;
             return View();
         }
@@ -44,6 +48,7 @@ namespace frontend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddBuild(Build build)
         {
+            DropDownList();
             List<int> componentsIds = new List<int>();
             if (build.Components.Count != 0) 
             { 
