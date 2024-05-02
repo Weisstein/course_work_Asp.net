@@ -10,7 +10,7 @@ namespace frontend.Models
         [StringLength(128, ErrorMessage = "Поле не может превышать 128 символов")]
         public string Name { get; set; } = string.Empty;
         
-        public string Description { get; set; } = string.Empty;
+        public string ?Description { get; set; } = string.Empty;
        
         public ICollection<Component>? Components { get; set; }
     }

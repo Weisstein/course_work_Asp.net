@@ -1,7 +1,6 @@
 ﻿@model Build
 @{
     ViewData["Title"] = "AddBuild";
-    ViewBag.Components = new List<Component>();
 }
 
 <form asp-action="AddBuild" method="post" class="d-flex">
@@ -15,7 +14,12 @@
             <textarea asp-for="Description"  class="form-control border-secondary bg-dark text-secondary" rows="3"></textarea>
         </div>
         <div>
-           
+           @foreach(var types in ViewBag.Types)
+            {
+                <div class="item-unselected" id=@types.Id>
+                    @types.Name
+                </div>
+            }
         </div>
     </div>
     <div class="form-group flex-fill justify-content-end" style="margin-left: 100px; margin-top: 30px">
@@ -33,5 +37,3 @@
         </div>
     </div>
 </form>
-
-

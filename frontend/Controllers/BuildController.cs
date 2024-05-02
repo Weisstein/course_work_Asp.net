@@ -31,28 +31,29 @@ namespace frontend.Controllers
         private async void GetTypes()
         {
             List<ComponentType> types = new List<ComponentType>();
-            using (var response = await _httpClient.GetAsync(baseAddress + $"Component/GetByFilter?typeName={name}"))
+            using (var response = await _httpClient.GetAsync(baseAddress + "ComponentType/GetAll"))
             {
                 string data = response.Content.ReadAsStringAsync().Result;
                 types = JsonConvert.DeserializeObject<List<ComponentType>>(data);
             }
-            ViewBag.Types = new SelectList(types, "Id", "Name");
+            ViewBag.Types = types;
         }
 
-        private async void DropDownList(object selectedComp = null, string name = null, string value = null)
+        private async void AddCompoent(int id)
         {
-            List<Component> components = new List<Component>();
-            using (var response = await _httpClient.GetAsync(baseAddress + $"Component/GetByFilter?typeName={name}"))
+            Component component = null;
+            using (var response = await _httpClient.GetAsync(baseAddress + $"Component/GetById/{id}"))
             {
                 string data = response.Content.ReadAsStringAsync().Result;
-                components = JsonConvert.DeserializeObject<List<Component>>(data);
+                component = JsonConvert.DeserializeObject<Component>(data);
             }
-            ViewBag.Component = new SelectList(components, "Id", "Name", selectedComp);
-        } 
+
+            ViewBag.Component = component;
+        }
 
         public async Task<IActionResult> AddBuild()
         {
-            DropDownList();
+            GetTypes();
             ViewBag.Price = 0;
             return View();
         }
@@ -60,8 +61,9 @@ namespace frontend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddBuild([Bind("Name", "Description")]Build build)
         {
-            
             List<int> componentsIds = new List<int>();
+            if (ViewBag.Component != 0 && ViewBag.Component != null)
+                build.Components.Add(ViewBag.Component);
             if (build.Components.Count != 0) 
             { 
                 
@@ -83,8 +85,8 @@ namespace frontend.Controllers
                 await _httpClient.PostAsync(baseAddress + "Build/Add", content);
                 return RedirectToAction("Index","Home");
             }
-            DropDownList(ViewBag.Component);
-            return View(build);
+            
+            return View();
         }
     }
 }
