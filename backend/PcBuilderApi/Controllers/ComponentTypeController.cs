@@ -6,7 +6,7 @@ using PcBuilderApi.Models;
 
 namespace PcBuilderApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ComponentTypeController : ControllerBase
     {
