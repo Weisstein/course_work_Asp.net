@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Build>
+@{
+    Layout = "_Layout"; ViewData["Title"] = "Builds";
+}
+
+
+    <h1 class="h1 text-center">Сборки</h1>
+    @foreach (var build in Model)
+    {
+       <div class="row m-2 w-100">
+            <a type="button" class="btn btn-outline-secondary btn-outline-primary " asp-controller="Build" asp-action="Index" asp-route-id="@build.Id">
+                Сборка
+                @build.Name
+           </a>
+       </div>
+    }
+    <div class="row m-2 w-100">
+    <a type="button" class="btn btn-outline-secondary btn-outline-primary" asp-controller="Build" asp-action="AddBuild">
+        Создать новую сборку
+    </a>
+    </div>

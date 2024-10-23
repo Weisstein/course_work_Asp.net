@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\DTOs\Новая папка\**" />
+    <Compile Remove="Models\Новая папка\**" />
+    <Content Remove="Models\DTOs\Новая папка\**" />
+    <Content Remove="Models\Новая папка\**" />
+    <EmbeddedResource Remove="Models\DTOs\Новая папка\**" />
+    <EmbeddedResource Remove="Models\Новая папка\**" />
+    <None Remove="Models\DTOs\Новая папка\**" />
+    <None Remove="Models\Новая папка\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Build\Details.cshtml" />
+    <Content Remove="Views\Build\_ComponentInfo.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+</Project>
